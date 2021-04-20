@@ -37,7 +37,7 @@ class App extends React.Component {
     BackgroundTimer.runBackgroundTimer(function() {
       Geolocation.getCurrentPosition(
         (position) => {
-          var speed = Math.round((Math.random() + position.coords.speed) * 3.6 * 10) / 10;
+          var speed = Math.round(position.coords.speed * 3.6 * 10) / 10;
           if (Math.abs(speed - self.state.currentSpeed) > 1){
             self.updateStateValue("currentSpeed", speed)
             if (speed > self.state.maxSpeed)
