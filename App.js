@@ -15,7 +15,6 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import BackgroundTimerWrapper from "./components/background-timer-wrapper";
 
 class App extends React.Component {
   backgroundStyle = { backgroundColor: Colors.black };
@@ -35,6 +34,7 @@ class App extends React.Component {
     SystemSetting.setVolume(0);
 
     const self = this;
+    // var count = 0;
     BackgroundTimer.runBackgroundTimer(function() {
       Geolocation.getCurrentPosition(
         (position) => {
@@ -46,13 +46,16 @@ class App extends React.Component {
             else
               SystemSetting.setVolume(speed / self.state.maxSpeed * self.state.maxVolume);
           }
+          // for test purpose
+          // console.log("N° " + count + ". Coords: " + position.coords.altitude + " ~ " + position.coords.latitude);
+          // count += 1;
         }, 
         (error) => {
           console.log(error.code, error.message);
         },
-        { maximumAge: 2000, enableHighAccuracy: true, forceRequestLocation: true }
+        { maximumAge: 0, enableHighAccuracy: true, forceRequestLocation: true, distanceFilter: 0 }
       );
-    }, 1000);
+    }, 2000);
   }
   
   componentWillUnmount() {
@@ -73,7 +76,7 @@ class App extends React.Component {
             <View>
             <Slider value={this.state.maxVolume} onValueChange={value => this.updateStateValue("maxVolume", value)} step={0.01} style={{ width: this.maxWidth - this.maxWidth / 10 }} maximumTrackTintColor={ Colors.white } />
             <Text style={{ fontSize: 16, textAlign: "center", color: Colors.white }}>
-                {Math.round(Math.round(Number(this.state.maxVolume) * 100) / 100 * 100)}%
+                {Math.round(Number(this.state.maxVolume) * 100)}%
             </Text>
             </View>
           </Section>
@@ -84,11 +87,8 @@ class App extends React.Component {
           </Section>
           <Section title="Information">
             <Text>
-              Max Volume is set at {this.state.maxVolume * 100}% and it can be reached at {this.state.maxSpeed} km/h 
+              Max Volume is set at {Math.round(Number(this.state.maxVolume) * 100)}% and it can be reached at {this.state.maxSpeed} km/h 
             </Text>
-          </Section>
-          <Section>
-            <BackgroundTimerWrapper />
           </Section>
           <Section>
             <Text>
