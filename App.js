@@ -15,6 +15,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
+import BackgroundTimerWrapper from "./components/background-timer-wrapper";
 
 class App extends React.Component {
   backgroundStyle = { backgroundColor: Colors.black };
@@ -62,19 +63,16 @@ class App extends React.Component {
   render (){
     return (
       <SafeAreaView style={this.backgroundStyle}>
-        <StatusBar barStyle={'dark-content'} />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={this.backgroundStyle}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic" style={this.backgroundStyle}>
         <Header text="Welcome to my App!" />
         <View style={this.backgroundStyle}>
           <Section title="Max Speed">
-            <NumericInput value={this.state.maxSpeed} step={5} minValue={0} maxValue={400} onChange={value => this.updateStateValue("maxSpeed", value)} />
+            <NumericInput value={this.state.maxSpeed} step={5} minValue={0} maxValue={400} onChange={value => this.updateStateValue("maxSpeed", value)} borderColor={ Colors.dark } rounded="true" textColor={ Colors.white } iconStyle={{ color: Colors.white }} leftButtonBackgroundColor={ Colors.darker } rightButtonBackgroundColor={ Colors.darker }/>
           </Section>
           <Section title="Max Volume">
             <View>
-            <Slider value={this.state.maxVolume} onValueChange={value => this.updateStateValue("maxVolume", value)} step={0.01} style={{ width: this.maxWidth - this.maxWidth / 10 }}/>
-            <Text style={{ fontSize: 16, textAlign: "center" }}>
+            <Slider value={this.state.maxVolume} onValueChange={value => this.updateStateValue("maxVolume", value)} step={0.01} style={{ width: this.maxWidth - this.maxWidth / 10 }} maximumTrackTintColor={ Colors.white } />
+            <Text style={{ fontSize: 16, textAlign: "center", color: Colors.white }}>
                 {Math.round(Math.round(Number(this.state.maxVolume) * 100) / 100 * 100)}%
             </Text>
             </View>
@@ -88,6 +86,9 @@ class App extends React.Component {
             <Text>
               Max Volume is set at {this.state.maxVolume * 100}% and it can be reached at {this.state.maxSpeed} km/h 
             </Text>
+          </Section>
+          <Section>
+            <BackgroundTimerWrapper />
           </Section>
           <Section>
             <Text>

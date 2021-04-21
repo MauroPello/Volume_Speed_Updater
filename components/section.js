@@ -10,7 +10,7 @@ class Section extends React.Component {
             style={[
                 styles.sectionTitle,
                 {
-                color: Colors.black,
+                  color: Colors.white,
                 },
             ]}>
             {this.props.title}
@@ -19,7 +19,7 @@ class Section extends React.Component {
             style={[
                 styles.sectionDescription,
                 {
-                color: Colors.dark,
+                color: Colors.white,
                 },
             ]}>
             {this.props.children}
